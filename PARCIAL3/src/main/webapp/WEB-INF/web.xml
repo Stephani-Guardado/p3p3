@@ -16,6 +16,18 @@
   	<description></description>
   	<servlet-class>com.estefany.controles.serveletuser</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ControladoresRegistro</servlet-name>
+  	<display-name>ControladoresRegistro</display-name>
+  	<description></description>
+  	<servlet-class>com.estefany.controles.ControladoresRegistro</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ControladorRegistros</servlet-name>
+  	<display-name>ControladorRegistros</display-name>
+  	<description></description>
+  	<servlet-class>com.estefany.controles.ControladorRegistros</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>serveletUser</servlet-name>
   	<url-pattern>/serveletUser</url-pattern>
@@ -23,5 +35,13 @@
   <servlet-mapping>
   	<servlet-name>serveletuser</servlet-name>
   	<url-pattern>/serveletuser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ControladoresRegistro</servlet-name>
+  	<url-pattern>/ControladoresRegistro</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ControladorRegistros</servlet-name>
+  	<url-pattern>/ControladorRegistros</url-pattern>
   </servlet-mapping>
 </web-app>

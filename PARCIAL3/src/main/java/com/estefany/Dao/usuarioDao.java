@@ -12,7 +12,7 @@ import com.estefany.model.Usuariosp;
 
 public class usuarioDao {
 	
-	public List<Usuariosp> ingresarUser(Usuariosp user){
+	public List<Usuariosp> ingresarUser(Usuariosp u){
 		
 		List<Usuariosp> usuario = new ArrayList ();
 		EntityManager em;
@@ -22,7 +22,7 @@ public class usuarioDao {
 		try {
 			
 			em.getTransaction().begin();
-			usuario = em.createQuery("from usuariosp").getResultList();
+			usuario = em.createQuery("FROM Usuariosp AS u where u.nombre='"+u.getNombre()+"' and u.contrasenia='"+u.getContrasenia()+"'").getResultList();
 			em.getTransaction().commit();
 			
 			

@@ -11,6 +11,16 @@
     <link rel= "stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <link rel="stylesheet" type="text/css" href="css/login.css">
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+   <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="index.jsp">Login</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="vista.jsp">VISTA</a>
+  </li>
+
+</ul>
 </head>
 <body background="img/fondo.jpg">
 	<form action="serveletuser" method="post">

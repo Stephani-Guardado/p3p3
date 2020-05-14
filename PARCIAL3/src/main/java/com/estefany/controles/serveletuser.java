@@ -7,8 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.estefany.Dao.mostrarDAO;
 import com.estefany.Dao.usuarioDao;
 import com.estefany.model.Usuariosp;
+import com.google.gson.Gson;
+
+
+
 
 /**
  * Servlet implementation class serveletuser
@@ -30,6 +35,34 @@ public class serveletuser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		   String abrir = request.getParameter("btn1");
+		    if(abrir!=null) {
+		    	if(abrir.equals("Eliminar")) {
+			    HttpSession abrirr =(HttpSession) request.getSession();	
+			   abrirr.invalidate();
+			   response.sendRedirect("Mostrar.jsp");
+			    }
+		    }else {
+		    	String usu = request.getParameter("usuario");
+			    String con = request.getParameter("contra");
+			    Usuariosp u = new Usuariosp();
+				  usuarioDao d = new usuarioDao();
+				  u.setNombre(usu);
+				  u.setContrasenia(con);	  
+	try {
+		int verri = d.ingresarUser(u).size();
+		if (verri==1) {
+			HttpSession s = request.getSession(true);
+			s.setAttribute("usuario", usu);
+			response.sendRedirect("Mostrar.jsp");
+	     }else {
+			System.out.println("Error");
+		}
+	} catch (Exception e) {
+		System.out.println("Error" + e);
+	}
+		}
 	}
 
 	/**
@@ -39,38 +72,13 @@ public class serveletuser extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-		String use = request.getParameter("usuario");
-		String contrase = request.getParameter("contra");
-		String cerrarsesion = request.getParameter("btncerrar");
-		
-		if (cerrarsesion !=null) {
-			if (cerrarsesion.equals("CERRAR")) {
-				
-				HttpSession cerrarsesiones = (HttpSession) request.getSession();
-				cerrarsesiones.invalidate();
-				
-				response.sendRedirect("index.jsp");
-			}
+		mostrarDAO dd = new mostrarDAO();
+		Gson json = new Gson();
+		try {
+			response.getWriter().append(json.toJson(dd.mostrar()));
+		} catch (Exception e) {
+			System.out.println(e);
 		}
-		else {
-			
-			Usuariosp user = new Usuariosp();
-			usuarioDao usuario = new usuarioDao();
-			int ingresarDatos =usuario.ingresarUser(user).size();
-			
-			if (ingresarDatos==1) {
-				
-				HttpSession seccion = request.getSession(true);
-				seccion.setAttribute("usuario", use);
-				
-			
-			} else {
-				System.out.println("error");
-			}
-			}
-			
-		
-		
-	}
 
+	}
 }
