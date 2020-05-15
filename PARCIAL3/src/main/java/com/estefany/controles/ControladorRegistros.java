@@ -10,6 +10,10 @@ import com.estefany.Dao.mostrarDAO;
 
 
 import com.estefany.model.Consulta;
+import com.google.gson.Gson;
+
+
+;
 
 /**
  * Servlet implementation class ControladorRegistros
@@ -31,18 +35,69 @@ public class ControladorRegistros extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		String action = request.getParameter("btn");
-		mostrarDAO d = new mostrarDAO();
-		Consulta c = new Consulta();
-		String id = request.getParameter("id");
+		Consulta c= new Consulta();
+		mostrarDAO cli = new mostrarDAO();
+				
+				String id=null;
+				String nombre=null;
+				String apellido=null;
+				
+				
+				try {
+					
+				
+				 id= request.getParameter("Id");
+				 nombre= request.getParameter("Nombre");
+		         apellido= request.getParameter("Apellido");
+				 
+		         c.setId(Integer.parseInt(id));
+		 		c.setNombre(nombre);
+		 		c.setApellido(apellido);
+		 		}catch (Exception e) {
+					// TODO: handle exception
+				}
+				String acction= request.getParameter("btn");
+				
+				if(acction.equals("Guardar Nuevo Registro")) {
+					try {
+				c.setId(Integer.parseInt(id));
+				c.setNombre(nombre);
+				c.setApellido(apellido);
+					cli.agregarC(c);
+					} catch (Exception e) {
+						response.sendRedirect("vista.jsp");	
+					}
+				}
+					
+				
+				else if(acction.equals("Guardar Actualizar")) {
+					try {
+						
+					
+				c.setId(Integer.parseInt(id));
+				c.setNombre(nombre);
+				c.setApellido(apellido);
+					} catch (Exception e) {
+						response.sendRedirect("vista.jsp");	
+					}
+				
+				cli.Actualizar(c);
+				}
+				
+				else if(acction.equals("ELIMINAR")) {
+					try {
+					c.setId(Integer.parseInt(id));
+					cli.EliminarC(c);
+				} catch (Exception e) {
+					response.sendRedirect("vista.jsp");	
+				}
+					
+				}
+					response.sendRedirect("vista.jsp");
+			}
+			
+			
 	
-		
-		if(action.equals("ELIMINAR")) {
-			c.setId(Integer.parseInt(id));
-			d.Eliminar(c);
-		}
-	}
 	
 
 	/**
@@ -51,6 +106,21 @@ public class ControladorRegistros extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		
+		
+		
+mostrarDAO consul=new mostrarDAO();
+
+Gson json= new Gson();
+try {
+	response.getWriter().append(json.toJson(consul.mostrar()));
+} catch (Exception e) {
+	// TODO: handle exception
+	System.out.println(e);
+	
+}
+
+	
 	}
 
 }

@@ -20,7 +20,7 @@ public class mostrarDAO {
 		em = emf.createEntityManager();
 		try {
 			em.getTransaction().begin();
-			listad = em.createQuery("SELECT c.apellido, c.nombre, c.id FROM Consulta as c").getResultList();
+			listad = em.createQuery(" FROM Consulta").getResultList();
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -28,17 +28,51 @@ public class mostrarDAO {
 		return listad;
 	}
 	
-	
-		public void Eliminar(Consulta ge) {
-			EntityManager em;
-			EntityManagerFactory emf;
-			emf = Persistence.createEntityManagerFactory("PARCIAL3");
-			em = emf.createEntityManager();
-			ge = em.getReference(Consulta.class,ge.getId());
-	        em.getTransaction().begin();
-			em.remove(ge);
+	public void agregarC(Consulta c) {
+		EntityManager em;
+		EntityManagerFactory emf;
+		emf= Persistence.createEntityManagerFactory("PARCIAL3");
+	     em=emf.createEntityManager();
+		
+	     em.getTransaction().begin();
+			em.persist(c);
 			em.flush();
 			em.getTransaction().commit();
+		
+
+		
+		
+	}
+	public void Actualizar(Consulta c) {
+		EntityManager em;
+		EntityManagerFactory emf;
+		emf= Persistence.createEntityManagerFactory("PARCIAL3");
+		   em=emf.createEntityManager();
+		c.getId();
+		c.getNombre();
+		c.getApellido();
+		
+		em.getTransaction().begin();
+			em.merge(c);
 			
-		}
+			em.flush();
+		
+			em.getTransaction().commit();
+		
+	}
+
+	public void EliminarC(Consulta c) {
+		EntityManager em;
+		EntityManagerFactory emf;
+		emf= Persistence.createEntityManagerFactory("PARCIAL3");
+		   em=emf.createEntityManager();
+		   c= em.getReference(Consulta.class,c.getId());
+		   em.getTransaction().begin();
+		em.remove(c);
+		
+		em.flush();
+
+		em.getTransaction().commit();
+	}
+	
 }

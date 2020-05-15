@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
 <html>
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script type="text/javascript" 
 src="http://code.jquery.com/jquery-latest.js"></script>
 
@@ -11,24 +9,24 @@ $(document).ready(function() {
 		
 	
 	  var btn =$('#cargar').val();
-		$.post('ControladorLogin',{
+		$.post('ControladorRegistros',{
 
 		}, function (respose) {
 			var datos = JSON.parse(respose);
-			var tablaDatos = document.getElementById('tablaDatos')
-			for (var item of datos) {
-				tablaDatos.innerHTML += 
-`
+var tabladato=document.getElementById('tablaDatos');
+for(let item of datos){
+	tabladato.innerHTML += `
+	
 <tr>
-					<td>${item[0]}</td>
-					<td>${item[1]}</td>
-					<td>${item[2]}</td>
-					<td> <a href="ControladorRegistros?btn=ELIMINAR$id=${item[2]}"
-					class="btn btn-info">Eliminar</a>	
-					 <a href="ControladorRegistros?btn=ELIMINAR$id=${item[2]}"
-							class="btn btn-danger">Actualizar</a>	
-                    </td>
-					
+<td>${item.apellido}</td>
+<td>${item.nombre}</td>
+<td>${item.id}</td>
+
+<td>
+<a href="ControladorRegistros?btn=ELIMINAR&Id=${item.id}" class="btn btn-warning">ELIMINAR</a>
+<a href="funciones.jsp?idBus=${item.id}&No=${item.nombre}&A=${item.apellido}" class="btn btn-success">Actualizar</a>
+
+</td>
 </tr>
 `	
 }
@@ -36,36 +34,37 @@ $(document).ready(function() {
 });
 });
 </script>
-<head>
-<meta charset="ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<title>Insert title here</title>
-</head>
 <%
+
 HttpSession s = (HttpSession) request.getSession();
 String usuario = (String)s.getAttribute("usuario");
 if(usuario==null){
-response.sendRedirect("Mostrar.jsp");
+response.sendRedirect("index.jsp");
 }
 %>
-<body>
-<from action="ControladorRegistros">
-<input type="hidden" name="id" >
-<a href="index.jsp"class="btn btn-info">Iniciar Seccion</a>
-<input type="submit" value="mostrar" name="btn" id="cargar">
-</from>
-
+<body Style ="background:url('https://us.123rf.com/450wm/ledinka/ledinka1706/ledinka170600002/79421985-modelo-poligonal-incons%C3%BAtil-azul-de-ne%C3%B3n-fondo-oscuro-con-ne%C3%B3n-azul-tecnolog%C3%ADa-moderna-rejilla-triangular-.jpg?ver=6')">
+<form action="ControladorRegistros"method ="post">
+<h1 align="center"class="text-secondary">Gestion de usuario</h1>
+	
+				<input type="submit" value="IniciarSecion" class="btn btn-success"name ="btn">
+			
+				
+		</form>		
+		<a href="funciones.jsp" class="btn btn-info">Agregar Registro</a>
+		<input type="submit" value="mostrar"class="btn btn-primary" name="btn" id="cargar">
 <table class="table table-dark" id="tablaDatos">
-	<thead ><b><H2 align="CENTER">Usuarios</H2></b></thead>
 	<thead>
-		<th>Apellido</th>
-		<th>Nombre</th>
-		<th>ID</th>
+		
+		<th>apellido</th>
+		<th>nombre</th>
+		<th>id</th>
+		
 	</thead>
-
 	<tbody>
 		
 	</tbody>
 </table>
+		
+			
 </body>
 </html>

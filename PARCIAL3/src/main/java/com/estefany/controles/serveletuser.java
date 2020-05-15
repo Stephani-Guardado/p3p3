@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 
 
+
 /**
  * Servlet implementation class serveletuser
  */
@@ -35,34 +36,7 @@ public class serveletuser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		   String abrir = request.getParameter("btn1");
-		    if(abrir!=null) {
-		    	if(abrir.equals("Eliminar")) {
-			    HttpSession abrirr =(HttpSession) request.getSession();	
-			   abrirr.invalidate();
-			   response.sendRedirect("Mostrar.jsp");
-			    }
-		    }else {
-		    	String usu = request.getParameter("usuario");
-			    String con = request.getParameter("contra");
-			    Usuariosp u = new Usuariosp();
-				  usuarioDao d = new usuarioDao();
-				  u.setNombre(usu);
-				  u.setContrasenia(con);	  
-	try {
-		int verri = d.ingresarUser(u).size();
-		if (verri==1) {
-			HttpSession s = request.getSession(true);
-			s.setAttribute("usuario", usu);
-			response.sendRedirect("Mostrar.jsp");
-	     }else {
-			System.out.println("Error");
-		}
-	} catch (Exception e) {
-		System.out.println("Error" + e);
-	}
-		}
+
 	}
 
 	/**
@@ -70,15 +44,37 @@ public class serveletuser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		
-		mostrarDAO dd = new mostrarDAO();
-		Gson json = new Gson();
-		try {
-			response.getWriter().append(json.toJson(dd.mostrar()));
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		String usu = request.getParameter("usuario");
+	    String con = request.getParameter("contra");
+		String abrir = request.getParameter("btn");
+	    if(abrir!=null) {
+	    	if(abrir.equals("IniciarSecion")) {
+		    HttpSession abrirr =(HttpSession) request.getSession();	
+		   abrirr.invalidate();
+		   response.sendRedirect("index.jsp");
+		    }
+	    }else {
+	    	
+		    Usuariosp u = new Usuariosp();
+			 usuarioDao d = new usuarioDao();
+			  u.setNombre(usu);
+			  u.setContrasenia(con);	  
+try {
+	int verri = d.ingresarUser(u).size();
+	if (verri==1) {
+		HttpSession s = request.getSession(true);
+		s.setAttribute("usuario", usu);
+		response.sendRedirect("vista.jsp");
+     }else {
+		System.out.println("Error");
+		response.sendRedirect("index.jsp");
+	}
+} catch (Exception e) {
+	System.out.println("Error" + e);
+}
+	}
+	
+	}
 
 	}
-}
+

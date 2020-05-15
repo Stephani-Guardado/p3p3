@@ -26,6 +26,7 @@
 	<form action="serveletuser" method="post">
 <h1><MARQUEE >WELCOME TO THE SYSTEM</MARQUEE></h1>
 <div class="modal-dialog text-center">
+
 <div class="col-sm-8 main-section">
 <div class="modal-content">
 <div class="col-12 user-img">
